@@ -2,6 +2,9 @@ const fs = require(`fs/promises`)
 
 const https = require(`./modules/https/index.js`)
 const roblox = require(`./modules/roblox/index.js`)
+const cil = require(`./modules/cli/index.js`)
+
+const flags = cli.flags()
 
 const pack = o => JSON.stringify(o, null, `\t`)
 const unpack = d => JSON.parse(d)
@@ -10,12 +13,13 @@ const sleep = ms => new Promise(r => setTimeout(r, ms))
 const assets = require(`./assets.json`)
 
 async function check() {
-	const userId = 30190178
+	const userId = parseInt(flags[`--id`])//30190178
+	const its = parseInt(flags[`-s`])
 
 	while (assets.length > 0) {
 		const reqs = []
 
-		for (let i = 0; i < 200; i++) {
+		for (let i = 0; i < Math.min(assets.length, its); i++) {
 			const r = new Promise(async res => {
 				const {id, name} = assets.shift()
 

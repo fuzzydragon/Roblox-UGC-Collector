@@ -80,23 +80,23 @@ async function scrape() {
 	_creators.push({ id: "", name: ""}) // look with "NO CREATOR" too
 
 	for (const creator of _creators) {
-		const reqs = []
+		// const reqs = []
+		// for (const subcategory of Object.values(subcategories)) {
+		// 	// const _assets = await collect(creator, subcategory)
+		// 	// _assets.forEach(a => assets.push(a))
 
-		for (const subcategory of Object.values(subcategories)) {
-			// const _assets = await collect(creator, subcategory)
-			// _assets.forEach(a => assets.push(a))
+		// 	const req = collect(creator, subcategory)
 
-			const req = collect(creator, subcategory)
+		// 	reqs.push(req)
+		// }
 
-			reqs.push(req)
-		}
-
+		const reqs = Object.values(subcategories).map(subcategory => collect(creator, subcategory))
 		const collections = await Promise.all(reqs)
 		
 		collections.forEach(collection => collection.forEach(asset => assets.push(asset)))
 	}
 
-	// autism
+	// "outside of the box thinking"
 	assets = [...new Map(assets.map(asset => [asset.id, asset])).values()]
 	assets.forEach(asset => creators.push(asset.creator))
 	creators = [...new Map(creators.map(creator => [creator.id, creator])).values()]
