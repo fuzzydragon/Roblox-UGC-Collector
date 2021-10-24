@@ -10,7 +10,7 @@ async function fetchFriendsForUserId(id) {
 		.then(response => JSON.parse(response.body).data)
 }
 
-async function fetchUsernameForId(id) {
+async function fetchUsernameForUserId(id) {
 	return https.get(`https://users.roblox.com/v1/users/${id}`)
 		.then(response => JSON.parse(response.body).name)
 }
@@ -30,4 +30,4 @@ async function fetchMembersInGroup(id) {
 	return members
 }
 
-module.exports = { fetchIdForUsername, fetchFriendsForUserId, fetchUsernameForId, fetchMembersInGroup }
+module.exports = { fetchIdForUsername, fetchFriendsForUserId, fetchUsernameForUserId, fetchMembersInGroup }
